@@ -1,0 +1,56 @@
+@startuml test
+
+' States
+ZeroState: PendingOp (optional)
+AccumulatorState: DigitAccumulator\nPendingOp (optional)
+AccumulatorDecimalState: DigitAccumulator\nPendingOp (optional)
+state ComputedState {
+    state ComputedState1
+    ComputedState1: Number
+    state ComputedState2
+    ComputedState2 : Number\nPendingOp
+}
+ErrorStateData: MathOperationError
+
+' Inputs
+' Zero
+ZeroState -> ZeroState : Zero (ignore)
+' AccumulatorState -> AccumulatorState : Digit
+' AccumulatorDecimalState -> AccumulatorDecimalState : Digit
+ComputedState -up-> ZeroState : Zero
+' ErrorStateData
+
+' NonZeroDigit
+ZeroState --> AccumulatorState : NonZeroDigit
+AccumulatorState -> AccumulatorState : Digit
+AccumulatorDecimalState -> AccumulatorDecimalState : Digit
+ComputedState -up-> AccumulatorState : NonZeroDigit
+' ErrorStateData
+
+' DecimalSeparator
+ZeroState -[#Brown]> AccumulatorDecimalState : Separator
+AccumulatorState -[#Brown]> AccumulatorDecimalState : Separator
+AccumulatorDecimalState -[#Brown]> AccumulatorDecimalState : Separator (ignore)
+ComputedState -up[#Brown]-> AccumulatorDecimalState : Separator
+' ErrorStateData
+
+' MathOp
+ZeroState -[#Blue]-> ComputedState2 : Op
+AccumulatorState -[#Blue]-> ComputedState2 : Op
+AccumulatorDecimalState -[#Blue]-> ComputedState2 : Op
+ComputedState -[#Blue]-> ComputedState2 : Op
+' ErrorStateData
+
+' Equals
+ZeroState -[#Green]-> ComputedState1 : Equals
+AccumulatorState -[#Green]-> ComputedState1 : Equals
+AccumulatorState -[#Red,bold]-> ErrorStateData : Equals
+AccumulatorDecimalState -[#Green]-> ComputedState1 : Equals
+AccumulatorDecimalState -[#Red,bold]-> ErrorStateData : Equals
+ComputedState2 -right[#Green]-> ComputedState1 : Equals
+' ErrorStateData
+
+' Clear
+[*] -> ZeroState : Clear
+
+@enduml
