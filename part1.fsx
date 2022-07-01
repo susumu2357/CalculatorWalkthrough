@@ -65,8 +65,8 @@ and CalculatorAction =
 
 and UpdateDisplayFromDigit = CalculatorDigit * CalculatorDisplay -> CalculatorDisplay
 
-// Only binary operation is addumed.
-and DoMathOperation = CalculatorMathOp * Number * Number -> Number
+// Only binary operation is assumed.
+and DoMathOperation = CalculatorMathOp * Number * Number -> MathOperationResult
 
 and Number = float
 
