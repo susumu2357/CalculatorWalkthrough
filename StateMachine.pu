@@ -10,7 +10,7 @@ state ComputedState {
     state ComputedState2
     ComputedState2 : Number\nPendingOp
 }
-ErrorStateData: MathOperationError
+ErrorState: MathOperationError
 
 ' Inputs
 ' Zero
@@ -18,21 +18,21 @@ ZeroState -> ZeroState : Zero (ignore)
 ' AccumulatorState -> AccumulatorState : Digit
 ' AccumulatorDecimalState -> AccumulatorDecimalState : Digit
 ComputedState -up-> ZeroState : Zero
-' ErrorStateData
+' ErrorState
 
 ' NonZeroDigit
 ZeroState --> AccumulatorState : NonZeroDigit
 AccumulatorState -> AccumulatorState : Digit
 AccumulatorDecimalState -> AccumulatorDecimalState : Digit
 ComputedState -up-> AccumulatorState : NonZeroDigit
-' ErrorStateData
+' ErrorState
 
 ' DecimalSeparator
 ZeroState -[#Brown]> AccumulatorDecimalState : Separator
 AccumulatorState -[#Brown]> AccumulatorDecimalState : Separator
 AccumulatorDecimalState -[#Brown]> AccumulatorDecimalState : Separator (ignore)
 ComputedState -up[#Brown]-> AccumulatorDecimalState : Separator
-' ErrorStateData
+' ErrorState
 
 ' MathOp
 ZeroState -[#Blue]-> ComputedState2 : Op
@@ -44,11 +44,11 @@ ComputedState -[#Blue]-> ComputedState2 : Op
 ' Equals
 ZeroState -[#Green]-> ComputedState1 : Equals
 AccumulatorState -[#Green]-> ComputedState1 : Equals
-AccumulatorState -[#Red,bold]-> ErrorStateData : Equals
+AccumulatorState -[#Red,bold]-> ErrorState : Equals
 AccumulatorDecimalState -[#Green]-> ComputedState1 : Equals
-AccumulatorDecimalState -[#Red,bold]-> ErrorStateData : Equals
+AccumulatorDecimalState -[#Red,bold]-> ErrorState : Equals
 ComputedState2 -right[#Green]-> ComputedState1 : Equals
-' ErrorStateData
+' ErrorState
 
 ' Clear
 [*] -> ZeroState : Clear
