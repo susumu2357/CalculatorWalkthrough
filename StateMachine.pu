@@ -1,4 +1,4 @@
-@startuml test
+@startuml StateMachine
 
 ' States
 ZeroState: PendingOp (optional)

@@ -15,5 +15,5 @@ Development environment:
   - The state represents a possible configuration of the app.
   - The transition is represented by a function `(input, state) -> state`.
 - Draw State Machine diagram.
-  ![alt text](test.png "StateMachine")
+  ![alt text](StateMachine.png "StateMachine")
 - Implement types and "real-code", check if the domain assumption works, go back to the previous stage if it is needed.
